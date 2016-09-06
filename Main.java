@@ -1,7 +1,12 @@
 
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.TreeSet;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,20 +31,42 @@ public class Main {
         int contJava = 0;
         int contWeb = 0;
         int contCel = 0;
+        Calculos cal = new Calculos();
+        int nigga;
+        Random rand = new Random();
         
         System.out.println("Ingrese la opcion que desee utilizar.(1.HashSet, 2.TreeSet, 3.LinkedHashSet.) ");
         String opcion = scan.nextLine();
+        /*String opcion = "3";*/
         
         jcfJava = fab.objetnerSet(opcion);
         jcfWeb = fab.objetnerSet(opcion);
         jcfCel = fab.objetnerSet(opcion);
         
         
+        /*for(int i = 0; i< 2000; i++){
+            nigga = rand.nextInt(2);
+            if(nigga == 1){
+                contJava++;
+                jcfJava.add("asdf"+Integer.toString(i));
+            }
+            nigga = rand.nextInt(2);
+            if(nigga == 1){
+                contWeb++;
+                jcfWeb.add("asdf"+Integer.toString(i));
+            } 
+            nigga = rand.nextInt(2);
+            if(nigga == 1){
+                contCel++;
+                jcfCel.add("asdf"+Integer.toString(i));
+            }
+        }*/
+        
         while(seguirPidiendo){
             System.out.println("Ingrese el nombre del usuario.");
             String name = scan.nextLine();
             
-            System.out.println("Ingrese 1 si es desarrollador de ese lenguaje 0 si no. Orden Java Web Cel.\n Ejemplo 101 no dice que es desarrollador de Java y de Cel pero no Web.");
+            System.out.println("Ingrese 1 si es desarrollador de ese lenguaje 0 si no. Orden de como se debe ingresar Java-Web-Cel.\n Ejemplo si ingresa 101 nos dice que es desarrollador de Java y de Cel pero no Web.");
             String info = scan.nextLine();
             info.replaceAll("\\s+","");
             for(int i = 0; i < info.length(); i++){
@@ -59,27 +86,7 @@ public class Main {
                             break;    
                     }
             }
-                
-            /*System.out.println("Ingrese 1 si es desarollador Java, 0 si no.");
-            String isJava = scan.nextLine();
-            if(isJava.equals("1")){
-                jcfJava.add(name);
-                contJava++;
-            }
             
-            System.out.println("Ingrese 1 si es desarollador Web, 0 si no.");
-            String isWeb = scan.nextLine();
-            if(isWeb.equals("1")){
-                jcfWeb.add(name);
-                contWeb++;
-            }        
-                
-            System.out.println("Ingrese 1 si es desarollador Cel, 0 si no.");
-            String isCel = scan.nextLine();
-            if(isCel.equals("1")){
-                jcfCel.add(name);
-                contCel++;
-            }*/
             System.out.println("Ingrese 1 si quiere seguir ingresando usuarios, 0 si no.");
             String haySig = scan.nextLine();
             if(!haySig.equals("1"))
@@ -151,7 +158,9 @@ public class Main {
             System.out.println("Los programadores de Java son un subconjunto de los de Web.");
         else
             System.out.println("Los programadores de Java no son un subconjunto de los de Web.");
-    
+        
+        
+        Set<String> orden = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
         
         
         if(contJava >= contWeb && contJava >= contCel){
@@ -161,6 +170,7 @@ public class Main {
                 obJava = itrJava.next();
                 System.out.println(obJava);
             } 
+            orden.addAll(jcfJava);
         }else{
             if(contWeb >= contCel){
                 System.out.println("El conjunto con mayor cantidad de desarrolladores es Web.");
@@ -169,6 +179,7 @@ public class Main {
                     obWeb = itrWeb.next();
                     System.out.println(obWeb);
                 }
+                orden.addAll(jcfWeb);
             }else{
                 System.out.println("El conjunto con mayor cantidad de desarrolladores es Cel.");
                 itrCel = jcfCel.iterator();
@@ -176,11 +187,16 @@ public class Main {
                     obCel = itrCel.next();
                     System.out.println(obCel);
                 }
+                orden.addAll(jcfCel);
             }  
         }
         
-        
-        
+        System.out.println("La lista de programadores mas grande en orden ascendente es: ");
+        Iterator itrOrden = orden.iterator();
+        while(itrOrden.hasNext()) {
+            System.out.println(itrOrden.next());
+            
+        }
         
     }
     
